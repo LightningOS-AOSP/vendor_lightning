@@ -327,7 +327,8 @@ PRODUCT_PACKAGES += \
     DocumentsUIOverlay \
     NetworkStackOverlay \
     NfcOverlay \
-    PermissionControllerOverlay
+    PermissionControllerOverlay \
+    SettingsLightning
 
 # Translations
 CUSTOM_LOCALES += \
