@@ -1,5 +1,6 @@
 # Copyright (C) 2017 Unlegacy-Android
 # Copyright (C) 2017,2020 The LineageOS Project
+# Copyright (C) 2025 LightningOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,16 +15,22 @@
 # limitations under the License.
 
 # -----------------------------------------------------------------
-# Lineage OTA update package
+# LightningOS OTA update package
 
-LINEAGE_TARGET_PACKAGE := $(PRODUCT_OUT)/lineage-$(LINEAGE_VERSION).zip
-
+LINEAGE_TARGET_PACKAGE := $(PRODUCT_OUT)/$(LINEAGE_VERSION).zip
 SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 
 $(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(LINEAGE_TARGET_PACKAGE)
-	$(hide) $(SHA256) $(LINEAGE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LINEAGE_TARGET_PACKAGE).sha256sum
-	@echo "Package Complete: $(LINEAGE_TARGET_PACKAGE)" >&2
+	@BUILD_START=$(shell date +%s); \
+	mv -f $(INTERNAL_OTA_PACKAGE_TARGET) $(LINEAGE_TARGET_PACKAGE); \
+	$(SHA256) $(LINEAGE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LINEAGE_TARGET_PACKAGE).sha256sum; \
+	echo "Creating json OTA..." >&2; \
+	./vendor/lineage/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(LINEAGE_VERSION).zip $(LIGHTNING_VERSION_BASE) $(LIGHTNING_CODENAME) $(LIGHTNING_PACKAGE_TYPE) $(LIGHTNING_RELEASE_TYPE); \
+	cp -f $(PRODUCT_OUT)/$(TARGET_DEVICE).json vendor/official_devices/$(LIGHTNING_PACKAGE_TYPE)/$(TARGET_DEVICE).json; \
+	rm -rf $(call intermediates-dir-for,PACKAGING,target_files); \
+	BUILD_END=$$(date +%s); \
+	BUILD_DURATION=$$((BUILD_END - BUILD_START)); \
+	./vendor/lineage/build/tasks/ascii_output.sh "$(TARGET_DEVICE)" "$(LINEAGE_VERSION)" "$(LIGHTNING_VERSION_BASE)" "$(LIGHTNING_PACKAGE_TYPE)" "$(LIGHTNING_BUILD_TYPE)" "$(PRODUCT_OUT)/$(LINEAGE_VERSION).zip" "$(LIGHTNINGOS_MAINTAINER)" "$${BUILD_DURATION}"
 
 .PHONY: bacon
 bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL)
