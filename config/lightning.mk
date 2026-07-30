@@ -23,7 +23,7 @@ PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-mist-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-lightning-product.xml
+    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-lightning-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-lightning-product.xml
 
 # BtHelper
 PRODUCT_PACKAGES += \
@@ -100,6 +100,14 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     dalvik.vm.dex2oat64.enabled=true
 
-# Extra packages
-PRODUCT_PACKAGES += \
-    MatLog
+# PERF_ANIM_OVERRIDE
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.activity_anim_perf_override=$(PERF_ANIM_OVERRIDE)
+
+ifeq ($(PERF_ANIM_OVERRIDE),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    debug.sf.predict_hwc_composition_strategy=0
+endif
+
+# Other ROM feature flags
+PERF_ANIM_OVERRIDE ?= false
