@@ -1,3 +1,7 @@
+# Additional packages
+PRODUCT_PACKAGES += \
+   BatteryStatsViewer
+
 # Enable Material Design 3 Expressive
 PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
 
