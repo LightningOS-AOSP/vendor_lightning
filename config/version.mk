@@ -42,19 +42,25 @@ ifeq ($(LIGHTNING_BUILD_TYPE), OFFICIAL)
   endif
 endif
 
-
-# Lightning Packages
-#ifeq ($(WITH_GMS),true)
-#  ifeq ($(TARGET_USES_MINI_GAPPS), true)
-#    LIGHTNING_PACKAGE_TYPE ?= MINI
-#  else ifeq ($(TARGET_USES_PICO_GAPPS), true)
-#    LIGHTNING_PACKAGE_TYPE ?= PICO
-#  else
-#    LIGHTNING_PACKAGE_TYPE ?= GAPPS
-#  endif
-#else
-#  LIGHTNING_PACKAGE_TYPE ?= VANILLA
-#endif
+# GMS
+WITH_GMS ?= false
+ifeq ($(WITH_GMS),true)
+  ifeq ($(TARGET_USES_MINI_GAPPS),true)
+    $(call inherit-product, vendor/gms/gms_mini.mk)
+    $(call inherit-product, vendor/pixel-style/config/common.mk)
+    LIGHTNING_PACKAGE_TYPE := MINI
+  else ifeq ($(TARGET_USES_PICO_GAPPS),true)
+    $(call inherit-product, vendor/gms/gms_pico.mk)
+    $(call inherit-product, vendor/pixel-style/config/common.mk)
+    LIGHTNING_PACKAGE_TYPE := PICO
+  else
+    $(call inherit-product, vendor/gms/gms_full.mk)
+    $(call inherit-product, vendor/pixel-style/config/common.mk)
+    LIGHTNING_PACKAGE_TYPE := GAPPS
+  endif
+else
+    LIGHTNING_PACKAGE_TYPE := VANILLA
+endif
 
 # Internal version
 LINEAGE_VERSION := LightningOS-$(LIGHTNING_VERSION_BASE)-$(LIGHTNING_CODENAME)-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(LIGHTNING_PACKAGE_TYPE)-$(shell date +%Y%m%d-%H%M)-$(LINEAGE_BUILD)-$(LIGHTNING_BUILD_TYPE)
