@@ -2,6 +2,11 @@
 PRODUCT_PACKAGES += \
    BatteryStatsViewer
 
+# LMO packages
+PRODUCT_PACKAGES += \
+    LMOFreeform \
+    LMOFreeformSidebar
+    
 # Enable Material Design 3 Expressive
 PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
 
