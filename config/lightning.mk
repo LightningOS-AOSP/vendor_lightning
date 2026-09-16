@@ -23,6 +23,10 @@ PRODUCT_PACKAGES += \
    OmniJaws \
    OmniStyle
 
+# Lightning Browser
+PRODUCT_PACKAGES += \
+    LightningBrowser
+
 # LMO packages
 PRODUCT_PACKAGES += \
     LMOFreeform \

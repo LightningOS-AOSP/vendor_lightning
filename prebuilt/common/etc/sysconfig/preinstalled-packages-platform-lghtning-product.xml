@@ -70,8 +70,8 @@
         <install-in user-type="PROFILE" />
         <do-not-install-in user-type="android.os.usertype.profile.CLONE" />
     </install-in-user-type>
-    <!-- Jelly (Browser) -->
-    <install-in-user-type package="org.lineageos.jelly">
+    <!-- Lightning Browser -->
+    <install-in-user-type package="com.lightning.browser">
         <install-in user-type="FULL" />
         <install-in user-type="PROFILE" />
         <do-not-install-in user-type="android.os.usertype.profile.CLONE" />
