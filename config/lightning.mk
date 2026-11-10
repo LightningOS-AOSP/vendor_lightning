@@ -21,6 +21,7 @@ PRODUCT_PACKAGES += \
    BatteryStatsViewer \
    FossifyGallery \
    GameSpace \
+   LightningBrowser \
    Updater \
    OmniJaws \
    OmniStyle
