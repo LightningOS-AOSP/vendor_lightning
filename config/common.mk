@@ -1,7 +1,7 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 $(call inherit-product-if-exists, vendor/lineage/config/lightning.mk)
-$(call inherit-product-if-exists, vendor/extras/config.mk)
+$(call inherit-product-if-exists, vendor/extras/lightning.mk)
 
 # ViperFX
 ifeq ($(TARGET_INCLUDE_VIPERFX),true)
